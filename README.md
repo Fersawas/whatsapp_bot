@@ -51,9 +51,12 @@ docker compose -f docker-compose.yml up -d
 docker compose -f docker-compose.yml down -v
 ```
 ## <a name="commands">Основные команды</a>
-"help" - Выведет пример запроса на добавление Напоминания
-"remember message:'<your_commnad>' time:'%H:%M'" - Пример запроса на запоминание (время в 24 часовом формате)
-"remind" - Выведет все Ваши напоминания
+- **"help"** 
+Выведет пример запроса на добавление Напоминания
+- **"remember message:'<your_commnad>' time:'%H:%M'"** 
+Пример запроса на запоминание (время в 24 часовом формате)
+- **"remind"** 
+Выведет все Ваши напоминания
 ## <a name="faq">FAQ</a>
 
 ### Работает?

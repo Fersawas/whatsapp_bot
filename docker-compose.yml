@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  bot:
+    build: .
+    container_name: whatsapp_bot
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+      - redis
+    command: ["sh", "-c", "alembic upgrade head && python bot.py"]
+    environment:
+      - TZ=Europe/Moscow
+
+  celery:
+    build: .
+    container_name: celery_worker
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - postgres
+    command: ["sh", "-c", "celery -A task worker --loglevel=info"]
+    environment:
+      - TZ=Europe/Moscow
+
+  redis:
+    image: redis:latest
+    container_name: redis
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
